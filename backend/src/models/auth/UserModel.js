@@ -25,7 +25,8 @@ const UserSchema = new mongoose.Schema(
 
     photo: {
       type: String,
-      default: "https://avatars.githubusercontent.com/u/19819005?v=4",
+      default:
+        "https://cdn.neowin.com/news/images/uploaded/2024/04/1713805860_microsoft-planner-logo-1_story.jpg",
     },
 
     bio: {
