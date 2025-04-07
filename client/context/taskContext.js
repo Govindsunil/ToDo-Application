@@ -1,4 +1,3 @@
-"use client";
 import React, { use } from "react";
 import { createContext, useEffect } from "react";
 import { useUserContext } from "./userContext";
@@ -27,10 +26,9 @@ export const TaskProvider = ({ children }) => {
     setTask({});
   };
   const openModalForEdit = (task) => {
-    setModal("edit");
+    setModalMode("edit");
     setIsEditing(true);
     setActiveTask(task);
-    setTask({});
   };
   const openProfileModal = () => {
     setProfileModal(true);
@@ -43,9 +41,10 @@ export const TaskProvider = ({ children }) => {
     setActiveTask(null);
     setTask({});
   };
+
   //get the task
 
-  const getTasks = async (taskId) => {
+  const getTasks = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${serverUrl}/tasks`);
@@ -87,30 +86,31 @@ export const TaskProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.patch(`${serverUrl}/task/${task._id}`, task);
-      const updatedTasks = tasks.map((t) => {
-        return t._id === task._id ? res.data : t;
+
+      // update the task in the tasks array
+      const newTasks = tasks.map((tsk) => {
+        return tsk._id === res.data._id ? res.data : tsk;
       });
+
       toast.success("Task updated successfully");
 
-      setTasks(updatedTasks);
+      setTasks(newTasks);
     } catch (error) {
-      console.log("error in updating task", error);
+      console.log("Error updating task", error);
     }
   };
 
-  //delete task
   const deleteTask = async (taskId) => {
     setLoading(true);
     try {
       await axios.delete(`${serverUrl}/task/${taskId}`);
-      // delete the task from the tasks array
-      const updatedTasks = tasks.filter((t) => {
-        t._id !== taskId;
-      });
-      setTasks(updatedTasks);
-      toast.success("Task deleted successfully");
+
+      // remove the task from the tasks array
+      const newTasks = tasks.filter((tsk) => tsk._id !== taskId);
+
+      setTasks(newTasks);
     } catch (error) {
-      console.log("error in deleting task", error);
+      console.log("Error deleting task", error);
     }
   };
 
@@ -125,6 +125,18 @@ export const TaskProvider = ({ children }) => {
       setTask({ ...task, [name]: e.target.value });
     }
   };
+
+  // get completed tasks
+  const completedTasks = tasks.filter((task) => task.completed);
+
+  // get pending tasks
+  const activeTasks = tasks.filter((task) => !task.completed);
+
+  useEffect(() => {
+    getTasks();
+  }, [userId]);
+
+  console.log("Active tasks", activeTasks);
 
   return (
     <TaskContext.Provider
@@ -148,6 +160,8 @@ export const TaskProvider = ({ children }) => {
         closeModal,
         modalMode,
         openProfileModal,
+        activeTasks,
+        completedTasks,
         profileModal,
       }}
     >

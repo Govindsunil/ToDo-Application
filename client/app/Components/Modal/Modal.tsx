@@ -115,19 +115,13 @@ function Modal() {
           </div>
         </div>
         <div className="mt-8">
-          {/* <button
+          <button
             type="submit"
-            className={`text-white py-2 rounded-md w-full hover:bg-blue-500 transition duration-200 ease-in-out ${
-              modalMode === "edit" ? "bg-blue-400" : "bg-green-400"
+            className={`text-white py-2 rounded-md w-full hover:bg-blue-400 transition duration-200 ease-in-out ${
+              modalMode === "edit" ? "bg-blue-500" : "bg-blue-500"
             }`}
           >
             {modalMode === "edit" ? "Update Task" : "Create Task"}
-          </button> */}
-          <button
-            type="submit"
-            className=" bg-blue-500 text-white py-2 rounded-md w-full hover:bg-blue-300 transition duration-200 ease-in-out"
-          >
-            create the task
           </button>
         </div>
       </form>
