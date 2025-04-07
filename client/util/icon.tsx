@@ -11,7 +11,7 @@ export const sunicon = (
   <i className="fa-solid fa-sun  fa-xl color: #5b6167;"></i>
 );
 export const sidebaricon = <i className="fas fa-bars"></i>;
-export const starticon = <i className="fas fa-star"></i>;
+export const staricon = <i className="fas fa-star"></i>;
 export const trashicon = <i className="fas fa-trash"></i>;
 export const editicon = <i className="fas fa-pen-to-square"></i>;
 export const checkicon = <i className="fas fa-check"></i>;

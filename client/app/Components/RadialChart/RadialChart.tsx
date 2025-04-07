@@ -34,7 +34,7 @@ export function Radialchart() {
 
   return (
     <Card className="flex flex-col border-2  bg-[#fcf8f8] border-[#E6E6E6] shadow-none">
-      <CardHeader className="items-center justify-center r pb-0">
+      <CardHeader className="items-center justify-center r ">
         <CardTitle>Completed & Pending Task</CardTitle>
         <CardDescription>Task completion rate</CardDescription>
       </CardHeader>
