@@ -11,6 +11,7 @@ import moment from "moment";
 import sendEmail from "../../helpers/sendEmail.js";
 import TaskModel from "../../models/task/taskModel.js"; // Adjust the path if necessary
 
+// Registering the user
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -259,7 +260,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   }
 });
 
-// verify user
+// verify user /verify on the bases of the above send mail
 export const verifyUser = asyncHandler(async (req, res) => {
   const { verificationToken } = req.params;
 
@@ -296,7 +297,7 @@ export const verifyUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "User verified" });
 });
 
-// forgot password
+// forgot password /email sending for forgot password
 export const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
@@ -415,8 +416,9 @@ export const changePassword = asyncHandler(async (req, res) => {
   }
 });
 
-//for notification
-cron.schedule("19 19 * * *", async () => {
+// for the notification reminder
+
+cron.schedule("00 1 * * *", async () => {
   try {
     const today = moment().startOf("day");
     const tomorrow = moment().add(1, "day").startOf("day");

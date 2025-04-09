@@ -33,7 +33,9 @@ function TaskItem({ task }: TaskItemProps) {
         <p>{task.description}</p>
       </div>
       <div className="mt-auto flex justify-between items-center">
-        <p className="text-sm text-gray-400">{formatTime(task.createdAt)}</p>
+        <p className="text-sm text-gray-400">
+          created:{formatTime(task.createdAt)}
+        </p>
         <p className={`text-sm font-bold ${getPriorityColor(task.priority)}`}>
           {task.priority}
         </p>

@@ -27,7 +27,7 @@ export default function Home() {
         <Filters />
       </div>
       <motion.div
-        className="pb-[2rem] mt-6 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-[1.5rem]"
+        className="pb-[4rem] mt-6 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-[1.5rem]"
         variants={container}
         initial="hidden"
         animate="visible"

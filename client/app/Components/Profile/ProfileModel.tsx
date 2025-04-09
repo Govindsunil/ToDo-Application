@@ -10,8 +10,14 @@ function ProfileModal() {
   const ref = React.useRef(null);
 
   const { closeModal } = useTasks();
-  const { user, updateUser, handlerUserInput, userState, changePassword } =
-    useUserContext();
+  const {
+    user,
+    updateUser,
+    handlerUserInput,
+    userState,
+    changePassword,
+    emailVerification,
+  } = useUserContext();
 
   useDetectOutside({
     ref,
@@ -20,7 +26,7 @@ function ProfileModal() {
     },
   });
 
-  const { name, email, photo } = user;
+  const { name, email, photo, isVerified } = user;
 
   //state
   const [oldPassword, setOldPassword] = React.useState("");
@@ -43,7 +49,7 @@ function ProfileModal() {
         <div className="absolute left-0 top-0 w-full h-[100px] bg-[#323232]/10 rounded-tr-md rounded-tl-md"></div>
 
         <div className="mt-4 relative flex justify-between">
-          <div className="relative inline-block">
+          <div className="relative inline-block p-2">
             <Image
               src={photo}
               alt="profile"
@@ -51,20 +57,29 @@ function ProfileModal() {
               height={80}
               className="rounded-full"
             />
-            <div className="absolute bottom-0 right-1 shadow-sm">
-              <span className="text-lg text-blue-400">{badgeicon}</span>
-              <span className="absolute z-20 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] text-xs text-white">
-                {checkicon}
-              </span>
-            </div>
+
+            {isVerified && (
+              <div className="absolute bottom-1 right-2 shadow-sm">
+                <span className="text-lg text-blue-600">{badgeicon}</span>
+                <span className="absolute z-20 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] text-xs text-white">
+                  {checkicon}
+                </span>
+              </div>
+            )}
           </div>
           <div className="self-end flex items-center gap-2">
             <button className="flex items-center gap-2 border-2 border-[#323232]/10 hover:border-2 hover:border-[#8797f0] hover:bg-[#d1d6ee] rounded-md py-1 px-3 text-xs font-medium text-[#323232]">
               {giticon} githubicons
             </button>
-            <button className="flex items-center gap-2 border-2 border-[#323232]/10 hover:border-[#8797f0] hover:bg-[#d1d6ee] rounded-md py-1 px-3 text-xs font-medium text-[#323232]">
-              {checkicon} Verified
-            </button>
+
+            {!isVerified && (
+              <button
+                className="flex items-center gap-2 border-2 border-[#323232]/10 hover:border-[#8797f0] hover:bg-[#d1d6ee] rounded-md py-1 px-3 text-xs font-medium text-[#323232]"
+                onClick={emailVerification}
+              >
+                {checkicon} Verify Account
+              </button>
+            )}
           </div>
         </div>
         <div>
