@@ -17,6 +17,6 @@ export const editicon = <i className="fas fa-pen-to-square"></i>;
 export const checkicon = <i className="fas fa-check"></i>;
 export const timeicon = <i className="fas fa-time"></i>;
 export const plusicon = <i className="fas fa-plus"></i>;
-export const badgeicon = <i className="fa-solid fa-tag"></i>;
+export const badgeicon = <i className="fa-solid certificate-tag"></i>;
 export const mailicon = <i className="fa-regular fa-envelope"></i>;
 export const homeicon = <i className="fa-regular fa-house"></i>;

@@ -3,11 +3,15 @@ import { useUserContext } from "@/context/userContext";
 import React from "react";
 import Link from "next/link";
 import { daynight, giticon, profileicon } from "@/util/icon";
+import { useTasks } from "@/context/taskContext";
+import { useRouter } from "next/navigation";
 
 function Header() {
   const { user } = useUserContext();
+  const { tasks, completedTasks, activeTasks, openModalForAdd } = useTasks();
   const { name } = user;
   const userId = user._id;
+  const router = useRouter();
 
   return (
     <header className="px-6 my-4 w-full flex items-center justify-between bg-[#f9f9f9 ]">
@@ -20,17 +24,26 @@ function Header() {
         </h1>
         <p className="text-sm ">
           {userId ? (
-            <>
-              you have <span>5</span> active tasks
-            </>
+            <>you have {activeTasks.length} active tasks</>
           ) : (
             "Please Login to see your tasks"
           )}
         </p>
       </div>
       <div className="h-[50px] flex items-center gap-[10rem]">
-        <button className="px-8 py-2 bg-[#3aafae] hover:bg-[#8797f0] text-white rounded-[40px] flex items-center justify-center gap-2 duration-200 easy-in-out ">
-          Create a new Task
+        <button
+          className="px-8 py-2 bg-[#3aafae] hover:bg-[#8797f0] text-white rounded-[40px] flex items-center justify-center gap-2 duration-200 easy-in-out "
+          onClick={() => {
+            if (userId) {
+              {
+                openModalForAdd();
+              }
+            } else {
+              router.push("/login");
+            }
+          }}
+        >
+          {userId ? "Add Task " : "Login"}
         </button>
         <div className="flex gap-4 items-center">
           <Link

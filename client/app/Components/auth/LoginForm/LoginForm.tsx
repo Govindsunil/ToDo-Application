@@ -11,11 +11,11 @@ function LoginForm() {
   return (
     <form className="m-[2rem] px-10 py-14 rounded-lg bg-white w-full max-w-[520px]">
       <div className="relative z-10">
-        <h1 className="mb-2 text-center text-[1.25rem] font-medium">
+        <h1 className="b-2 text-center text-[1.35rem] font-medium">
           {" "}
           Login to Your account{" "}
         </h1>
-        <p className="mb-8 px-[2rem] text-center text-[14px]  ">
+        <p className="mb-8 px-[2rem] text-center text-[#999] text-[14px]  ">
           Don't have an Account?{" "}
           <a href="/register" className="text-blue-500 hover:underline">
             {" "}

@@ -16,7 +16,8 @@ const sendEmail = async (
   reply_to,
   template,
   name,
-  link
+  link,
+  context
 ) => {
   const transporter = nodeMailer.createTransport({
     host: "smtp.gmail.com",
@@ -49,6 +50,7 @@ const sendEmail = async (
     context: {
       name: name,
       link: link,
+      ...context,
     },
   };
 

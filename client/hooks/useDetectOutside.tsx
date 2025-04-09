@@ -1,13 +1,13 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 interface useDetectOutsideProps {
-  ref: React.RefObject<HTMLElement>;
+  ref: React.RefObject<HTMLDivElement>;
   callback: () => void;
 }
 function useDetectOutside({ ref, callback }: useDetectOutsideProps) {
   useEffect(() => {
     //detecting outside click
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+    const handleClickOutside = (event: any) => {
+      if (ref.current && !ref.current.contains(event.target)) {
         callback();
       }
     };

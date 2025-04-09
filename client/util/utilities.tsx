@@ -15,7 +15,7 @@ export const formatTime = (createdAt: string) => {
     return "Yesterday";
   }
 
-  // check if created with in the last 7 days
+  // check if created with the last 7 days
   if (created.isAfter(moment().subtract(6, "days"))) {
     return created.fromNow();
   }
@@ -51,5 +51,14 @@ export const overdueTasks = (tasks: Task[]) => {
   // filter tasks that are not completed and the due date is before today
   return tasks.filter((task) => {
     return !task.completed && moment(task.dueDate).isBefore(todayDate);
+  });
+};
+
+export const dueTodayTasks = (tasks: Task[]) => {
+  const todayDate = moment().format("YYYY-MM-DD");
+
+  // filter tasks that are not completed and the due date is today
+  return tasks.filter((task) => {
+    return !task.completed && task.dueDate === todayDate;
   });
 };

@@ -6,7 +6,10 @@ import jwt from "jsonwebtoken";
 import Token from "../../models/auth/Token.js";
 import crypto from "node:crypto";
 import hashToken from "../../helpers/hashToken.js";
+import cron from "node-cron";
+import moment from "moment";
 import sendEmail from "../../helpers/sendEmail.js";
+import TaskModel from "../../models/task/taskModel.js"; // Adjust the path if necessary
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -409,5 +412,114 @@ export const changePassword = asyncHandler(async (req, res) => {
     return res.status(200).json({ message: "Password changed successfully" });
   } else {
     return res.status(400).json({ message: "Password could not be changed!" });
+  }
+});
+
+//for notification
+cron.schedule("19 19 * * *", async () => {
+  try {
+    const today = moment().startOf("day");
+    const tomorrow = moment().add(1, "day").startOf("day");
+
+    // Find tasks due today (excluding completed tasks)
+    const tasksDueToday = await TaskModel.find({
+      dueDate: { $gte: today.toDate(), $lt: tomorrow.toDate() },
+      completed: false, // Exclude completed tasks
+    }).populate("user");
+
+    // Find overdue tasks (excluding completed tasks)
+    const overdueTasks = await TaskModel.find({
+      dueDate: { $lt: today.toDate() }, // Tasks overdue before today
+      completed: false, // Exclude completed tasks
+    }).populate("user");
+
+    // Group tasks by user
+    const tasksByUser = {};
+    for (const task of tasksDueToday) {
+      const userId = task.user._id.toString();
+      if (!tasksByUser[userId]) {
+        tasksByUser[userId] = {
+          email: task.user.email,
+          name: task.user.name,
+          tasks: [],
+          overdueCount: 0,
+        };
+      }
+      tasksByUser[userId].tasks.push({
+        title: task.title,
+        dueDate: moment(task.dueDate).format("MMMM Do YYYY"),
+      });
+    }
+
+    // Add overdue task count for each user
+    for (const task of overdueTasks) {
+      const userId = task.user._id.toString();
+      if (!tasksByUser[userId]) {
+        tasksByUser[userId] = {
+          email: task.user.email,
+          name: task.user.name,
+          tasks: [],
+          overdueCount: 0,
+        };
+      }
+      // Increment the overdue count for the user
+      tasksByUser[userId].overdueCount += 1;
+    }
+
+    // Log the tasksByUser object for debugging
+    console.log("Tasks by User:", tasksByUser);
+
+    // Send a single email to each user with overdue tasks
+    for (const userId in tasksByUser) {
+      const { email, name, tasks, overdueCount } = tasksByUser[userId];
+
+      // Skip users with no overdue tasks
+      if (overdueCount === 0) {
+        console.log(
+          `Skipping email for ${name} (${email}) - No overdue tasks.`
+        );
+        continue;
+      }
+
+      // Create the task list for the email body
+      const taskList = tasks.map(
+        (task, index) => `${index + 1}. ${task.title} (Due: ${task.dueDate})`
+      );
+
+      // Email details
+      const subject = "Tasks Due Today Reminder";
+      const send_to = email;
+      const send_from = process.env.USER_EMAIL;
+      const reply_to = "noreply@example.com";
+      const template = "taskReminder";
+      const url = `${process.env.CLIENT_URL}/tasks`; // Link to the tasks page
+
+      // Context for the email template
+      const context = {
+        name, // User's name
+        taskList, // List of tasks
+        overdueCount, // Number of overdue tasks
+      };
+
+      try {
+        await sendEmail(
+          subject,
+          send_to,
+          send_from,
+          reply_to,
+          template,
+          name,
+          url,
+          context
+        );
+        console.log(`Email sent to ${name} (${email})`);
+      } catch (error) {
+        console.error(`Error sending email to ${name} (${email}):`, error);
+      }
+    }
+
+    console.log("6 AM notifications sent successfully.");
+  } catch (error) {
+    console.error("Error sending 6 AM notifications:", error);
   }
 });

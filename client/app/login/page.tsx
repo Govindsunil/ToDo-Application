@@ -15,10 +15,8 @@ function page() {
   }, [user, router]);
   // return null or the loading screen
 
-  if (user && user) {
+  if (user && user._id) {
     return null; // or a loading spinner
-  } else {
-    router.push("/login");
   }
   return (
     <div className="login-page w-full h-full flex justify-center items-center">

@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useTasks } from "@/context/taskContext";
 const chartConfig = {
   desktop: {
     label: "pending",
@@ -29,8 +30,12 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function Radialchart() {
-  const Totaltask = 100;
-  const chartData = [{ completed: 20, pending: 80 }];
+  const { tasks, completedTasks, activeTasks } = useTasks();
+
+  const Totaltask = tasks.length;
+  const chartData = [
+    { completed: completedTasks.length, pending: activeTasks.length },
+  ];
 
   return (
     <Card className="flex flex-col border-2  bg-[#fcf8f8] border-[#E6E6E6] shadow-none">

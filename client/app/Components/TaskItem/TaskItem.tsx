@@ -3,6 +3,8 @@ import { editicon, staricon, trashicon } from "@/util/icon";
 import { Task } from "@/util/types";
 import { formatTime } from "@/util/utilities";
 import React from "react";
+import { motion } from "framer-motion";
+import { item } from "@/util/animations";
 
 interface TaskItemProps {
   task: Task;
@@ -22,7 +24,10 @@ function TaskItem({ task }: TaskItemProps) {
   };
   const { getTask, openModalForEdit, deleteTask, modalMode } = useTasks();
   return (
-    <div className="h-[16rem] px-4 py-3 flex flex-col gap-4 shadow-sm bg-[#f9f9f9] rounded-lg border-2 border-white">
+    <motion.div
+      className="h-[16rem] px-4 py-3 flex flex-col gap-4 shadow-sm bg-[#f9f9f9] rounded-lg border-2 border-white"
+      variants={item}
+    >
       <div>
         <h4 className="font-blold text-2xl">{task.title}</h4>
         <p>{task.description}</p>
@@ -61,7 +66,7 @@ function TaskItem({ task }: TaskItemProps) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

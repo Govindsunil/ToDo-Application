@@ -42,7 +42,7 @@ export const TaskProvider = ({ children }) => {
     setTask({});
   };
 
-  //get the task
+  //get the tasks
 
   const getTasks = async () => {
     setLoading(true);
@@ -99,7 +99,7 @@ export const TaskProvider = ({ children }) => {
       console.log("Error updating task", error);
     }
   };
-
+  //delete Tasks
   const deleteTask = async (taskId) => {
     setLoading(true);
     try {
@@ -107,13 +107,14 @@ export const TaskProvider = ({ children }) => {
 
       // remove the task from the tasks array
       const newTasks = tasks.filter((tsk) => tsk._id !== taskId);
+      toast.success("Task deleted successfully");
 
       setTasks(newTasks);
     } catch (error) {
       console.log("Error deleting task", error);
     }
   };
-
+  // remove all task
   useEffect(() => {
     getTasks();
   }, [userId]);
@@ -135,8 +136,6 @@ export const TaskProvider = ({ children }) => {
   useEffect(() => {
     getTasks();
   }, [userId]);
-
-  console.log("Active tasks", activeTasks);
 
   return (
     <TaskContext.Provider
@@ -163,6 +162,7 @@ export const TaskProvider = ({ children }) => {
         activeTasks,
         completedTasks,
         profileModal,
+        openProfileModal,
       }}
     >
       {children}
