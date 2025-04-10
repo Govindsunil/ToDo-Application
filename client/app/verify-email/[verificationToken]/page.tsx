@@ -2,19 +2,19 @@
 import { useUserContext } from "@/context/userContext";
 import React from "react";
 
-interface PageProps {
+interface Props {
   params: {
     verificationToken: string;
   };
 }
 
-function page({ params }: PageProps) {
+function page({ params }: Props) {
   const { verificationToken } = params;
 
   const { verifyUser } = useUserContext();
 
   return (
-    <div className="login-page  flex flex-col justify-center items-center">
+    <div className="auth-page  flex flex-col justify-center items-center">
       <div className="bg-white flex flex-col justify-center gap-[1rem] px-[4rem] py-[2rem] rounded-md">
         <h1 className="text-[#999] text-[2rem]">Verify Your Account</h1>
         <button
