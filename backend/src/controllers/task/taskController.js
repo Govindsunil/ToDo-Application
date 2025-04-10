@@ -1,5 +1,7 @@
 import asyncHandler from "express-async-handler";
 import TaskModel from "../../models/task/taskModel.js";
+import cron from "node-cron";
+import moment from "moment";
 
 export const createTask = asyncHandler(async (req, res) => {
   try {
@@ -159,5 +161,23 @@ export const deleteAllTasks = asyncHandler(async (req, res) => {
   } catch (error) {
     console.log("Error in deleteAllTasks: ", error.message);
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Schedule a cron job to run daily at midnight
+cron.schedule("26 16 * * *", async () => {
+  try {
+    const thirtyDaysAgo = moment().subtract(30, "days").startOf("day").toDate();
+
+    // Find and delete tasks where the due date is more than 30 days in the past
+    const result = await TaskModel.deleteMany({
+      dueDate: { $lt: thirtyDaysAgo },
+    });
+
+    console.log(
+      `Deleted ${result.deletedCount} tasks that were overdue by more than 30 days.`
+    );
+  } catch (error) {
+    console.error("Error in auto-deleting tasks:", error.message);
   }
 });

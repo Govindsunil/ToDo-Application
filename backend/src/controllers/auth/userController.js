@@ -418,7 +418,7 @@ export const changePassword = asyncHandler(async (req, res) => {
 
 // for the notification reminder
 
-cron.schedule("00 1 * * *", async () => {
+cron.schedule("00 5 * * *", async () => {
   try {
     const today = moment().startOf("day");
     const tomorrow = moment().add(1, "day").startOf("day");
@@ -469,7 +469,7 @@ cron.schedule("00 1 * * *", async () => {
     }
 
     // Log the tasksByUser object for debugging
-    console.log("Tasks by User:", tasksByUser);
+    // console.log("Tasks by User:", tasksByUser);
 
     // Send a single email to each user with overdue tasks
     for (const userId in tasksByUser) {
@@ -477,9 +477,9 @@ cron.schedule("00 1 * * *", async () => {
 
       // Skip users with no overdue tasks
       if (overdueCount === 0) {
-        console.log(
-          `Skipping email for ${name} (${email}) - No overdue tasks.`
-        );
+        // console.log(
+        //   `Skipping email for ${name} (${email}) - No overdue tasks.`
+        // );
         continue;
       }
 
@@ -514,9 +514,9 @@ cron.schedule("00 1 * * *", async () => {
           url,
           context
         );
-        console.log(`Email sent to ${name} (${email})`);
+        // console.log(`Email sent to ${name} (${email})`);
       } catch (error) {
-        console.error(`Error sending email to ${name} (${email}):`, error);
+        // console.error(`Error sending email to ${name} (${email}):`, error);
       }
     }
 

@@ -58,14 +58,14 @@ function MiniSidebar() {
         </ul>
 
         {/* The delete all button */}
-        <div className="mb-[1.5rem] relative group">
+        {/* <div className="mb-[1.5rem] relative group">
           <button className="w-10 h-10 flex flex-col justify-center items-center border-2 p-2 rounded-full border-[#EB4E31]">
             <IconDeleteAll strokeColor="#EB4E31" />
           </button>
           <span className="absolute  left-12 top-1/2 -translate-y-1/2 bg-white text-[#EB4E31] text-xs font-semibold px-3 py-1  rounded-[40px] shadow-lg hidden group-hover:block duration-200 ">
             DeleteAll
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
