@@ -7,7 +7,7 @@ import { useTasks } from "@/context/taskContext";
 import { useRouter } from "next/navigation";
 
 function Header() {
-  const { user } = useUserContext();
+  const { user, logoutUser } = useUserContext();
   const { tasks, completedTasks, activeTasks, openModalForAdd } = useTasks();
   const { name } = user;
   const userId = user._id;
@@ -30,21 +30,31 @@ function Header() {
           )}
         </p>
       </div>
-      <div className="h-[50px] flex items-center gap-[10rem]">
-        <button
-          className="px-8 py-2 bg-[#3aafae] hover:bg-[#8797f0] text-white rounded-[40px] flex items-center justify-center gap-2 duration-200 easy-in-out "
-          onClick={() => {
-            if (userId) {
-              {
-                openModalForAdd();
+      <div className="h-[50px] flex items-center gap-[4rem]">
+        <div className="flex gap-4">
+          <button
+            className="px-8 py-2 bg-[#3aafae] hover:bg-[#8797f0] text-white rounded-[40px] flex items-center justify-center gap-2 duration-200 easy-in-out "
+            onClick={() => {
+              if (userId) {
+                {
+                  openModalForAdd();
+                }
+              } else {
+                router.push("/login");
               }
-            } else {
-              router.push("/login");
-            }
-          }}
-        >
-          {userId ? "Add Task " : "Login"}
-        </button>
+            }}
+          >
+            {userId ? "Add Task " : "Login"}
+          </button>
+          {userId && (
+            <button
+              className="px-8 py-2 bg-red-600 rounded-[50px] text-white hover:bg-red-400 duration-200 ease-in-out"
+              onClick={logoutUser}
+            >
+              Sigin out
+            </button>
+          )}
+        </div>
         <div className="flex gap-4 items-center">
           <Link
             href="https://github.com/Govindsunil"

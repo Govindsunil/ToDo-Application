@@ -58,7 +58,7 @@ function Modal() {
             id="title"
             placeholder="Task Title"
             name="title"
-            value={task.title}
+            defaultValue={task.title || ""}
             onChange={(e) => handleInput("title")(e)}
           />
         </div>
@@ -90,10 +90,10 @@ function Modal() {
           <label htmlFor="dueDate">Due Date</label>
           <input
             className="bg-[#F9F9F9] p-2 rounded-md border"
-            type="date"
+            type="datetime-local"
             id="dueDate"
             name="dueDate"
-            value={task.dueDate}
+            defaultValue={task.dueDate}
             onChange={(e) => handleInput("dueDate")(e)}
           />
         </div>

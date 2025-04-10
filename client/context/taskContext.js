@@ -41,7 +41,6 @@ export const TaskProvider = ({ children }) => {
     setActiveTask(null);
     setTask({});
   };
-
   //get the tasks
 
   const getTasks = async () => {

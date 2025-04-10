@@ -1,7 +1,7 @@
 import { useTasks } from "@/context/taskContext";
 import { editicon, staricon, trashicon } from "@/util/icon";
 import { Task } from "@/util/types";
-import { formatTime } from "@/util/utilities";
+import { formatTime, formatTimeDue } from "@/util/utilities";
 import React from "react";
 import { motion } from "framer-motion";
 import { item } from "@/util/animations";
@@ -29,8 +29,20 @@ function TaskItem({ task }: TaskItemProps) {
       variants={item}
     >
       <div>
-        <h4 className="font-blold text-2xl">{task.title}</h4>
-        <p>{task.description}</p>
+        <div className="mr-3 flex justify-between items-center">
+          <h4 className="pb-1 font-bold text-2xl hidescorllbar h-[2.5rem] overflow-y-auto text-ellipsis  max-w-[15rem]">
+            {/* text-ellipsis overflow-hidden whitespace-nowrap max-w-[15rem]
+            font-bold text-2xl*/}
+            {task.title}
+          </h4>
+          <p className="text-sm text-gray-400">
+            Due: {formatTimeDue(task.dueDate)}
+          </p>
+        </div>
+
+        <p className="hidescorllbar h-[9.2rem] overflow-y-auto">
+          {task.description}
+        </p>
       </div>
       <div className="mt-auto flex justify-between items-center">
         <p className="text-sm text-gray-400">

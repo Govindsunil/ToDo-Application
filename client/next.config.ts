@@ -5,7 +5,12 @@ const nextConfig: NextConfig = {
   // next.config.js
 
   images: {
-    domains: ["cdn.neowin.com", "example.com", "anotherdomain.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**", // Allow all domains
+      },
+    ],
   },
 };
 

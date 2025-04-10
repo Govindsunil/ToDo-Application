@@ -11,12 +11,6 @@ function Sidebar() {
       <div className="mt-4 mx-6">
         <RadialChart />
       </div>
-      <button
-        className="mb-4 py-4 px-8 m-6 bg-red-600 rounded-[50px] text-white hover:bg-red-400 duration-200 ease-in-out"
-        onClick={logoutUser}
-      >
-        Sign out
-      </button>
     </div>
   );
 }
