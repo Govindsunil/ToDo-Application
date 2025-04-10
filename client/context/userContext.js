@@ -9,7 +9,7 @@ const UserContext = React.createContext();
 axios.defaults.withCredentials = true;
 
 export const UserContextProvider = ({ children }) => {
-  const serverUrl = "https://todo-application-szko.onrender.com";
+  const serverUrl = "https://taskonyxtodo.onrender.com";
 
   const router = useRouter();
 
