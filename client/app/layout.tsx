@@ -17,6 +17,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Task-Onyx ToDo",
   description: "Task-Onyx ToDo. A modern task management application",
+  icons: "@/public/logo.png",
 };
 
 export default function RootLayout({
