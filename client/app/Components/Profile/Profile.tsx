@@ -27,7 +27,7 @@ function Profile() {
         </div>
         <div>
           <h1 className="flex flex-col text-lg">
-            <span className=" font-medium">Hello,</span>
+            <span className=" font-medium">Profile,</span>
             <span className="font-bold">{user?.name || "Guest"}</span>
           </h1>
         </div>
