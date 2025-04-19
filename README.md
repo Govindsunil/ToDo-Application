@@ -23,6 +23,7 @@ Site link: https://taskonyxtodo.vercel.app/login.
 
   - Update user profile details (name, email, password).
   - Upload and display profile pictures.
+  - Verify the email.
 
 - **Responsive Design**:
 
